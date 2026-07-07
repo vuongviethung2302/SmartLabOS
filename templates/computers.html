@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SmartLab OS</title>
+</head>
+
+<body>
+
+    <h1>Danh sách máy tính</h1>
+
+    <table border="1">
+
+        <tr>
+            <th>SmartLab ID</th>
+            <th>Phòng</th>
+            <th>IP Address</th>
+            <th>MAC Address</th>
+            <th>CPU</th>
+            <th>RAM</th>
+            <th>Windows</th>
+            <th>Status</th>
+        </tr>
+
+        {% for computer in computers %}
+
+        <tr>
+            <td>{{ computer.computer_name }}</td>
+            <td>{{ computer.room }}</td>
+            <td>{{ computer.ip_address }}</td>
+            <td>{{ computer.mac_address }}</td>
+            <td>{{ computer.cpu }}</td>
+            <td>{{ computer.ram_gb }}</td>
+            <td>{{ computer.windows_version }}</td>
+            <td>{{ computer.status }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</body>
+
+</html>
