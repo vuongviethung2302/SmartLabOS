@@ -1,31 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
-
     <meta charset="UTF-8">
-
     <title>SmartLab OS</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-        rel="stylesheet">
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/style.css') }}">
-
 </head>
 
 <body>
 
-<div class="container mt-4">
-
     <h1>Danh sách máy tính</h1>
 
-    <table class="table table-striped table-hover table-bordered"></table>
+    <table border="1">
 
         <tr>
             <th>SmartLab ID</th>
@@ -54,7 +40,6 @@
         {% endfor %}
 
     </table>
-</div>
 
 </body>
 
