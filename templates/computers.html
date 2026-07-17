@@ -35,7 +35,7 @@
 
         </button>
 </div>
-        <small class="text-muted d-block mb-3">
+        <small class="text-muted">
             Computer Management System
         </small>
 
@@ -51,8 +51,11 @@
 
 <div class="card-body">
 
+    <div class="table-responsive">
 
     <table class="table table-striped table-hover table-bordered">
+
+        <thead class="table-dark">
 
         <tr>
             <th>SmartLab ID</th>
@@ -64,7 +67,8 @@
             <th>Windows</th>
             <th>Status</th>
         </tr>
-
+        </thead>
+        <tbody>
         {% for computer in computers %}
 
         <tr>
@@ -75,12 +79,47 @@
             <td>{{ computer.cpu }}</td>
             <td>{{ computer.ram_gb }}</td>
             <td>{{ computer.windows_version }}</td>
-            <td>{{ computer.status }}</td>
+            <td>
+
+                {% if computer.status == "Offline" %}
+
+                    <span class="badge bg-danger">
+                        Offline
+                    </span>
+
+                {%elif computer.status == "Online" %}
+                    <span class="bagde bg-success">
+                        
+                        Online
+
+                    </span>
+
+                {% elif computer.status == "Maintenance" %}
+
+                    <span class="badge bg-warning text-dark">
+
+                        Maintenance
+
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-secondary">
+
+                        {{ computer.status }}
+
+                    </span>
+
+                {% endif %}
+
+            </td>
+
         </tr>
 
         {% endfor %}
-
+        </tbody>    
     </table>
+    </div>
 </div>
 </div>
 
