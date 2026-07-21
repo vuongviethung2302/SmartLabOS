@@ -1,7 +1,13 @@
 from services.scanner.network_scanner import NetworkScanner
+import time
 
 scanner = NetworkScanner()
 
-online = scanner.scan_subnet("127.0.0.0/30")
+start = time.time()
 
-print(online)
+online = scanner.scan_subnet_thread("127.0.0.0/30")
+
+end = time.time()
+
+print("Online Hosts:", online)
+print("Time:", round(end - start, 2), "seconds")
