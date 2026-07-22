@@ -10,4 +10,6 @@ class HostInfo:
 
     mac_address: str = ""
 
+    vendor: str = ""
+
     online: bool = False

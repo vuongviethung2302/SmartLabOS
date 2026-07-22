@@ -4,6 +4,7 @@ import ipaddress
 from .ping import ping_host
 from .hostname import get_hostname
 from .mac import get_mac_address
+from .vendor import get_vendor
 from .host_info import HostInfo
 
 
@@ -19,11 +20,14 @@ class NetworkScanner:
 
         if not ping_host(ip_address):
             return None
+        
+        mac = get_mac_address(ip_address)
 
         return HostInfo(
             ip_address=ip_address,
             computer_name=get_hostname(ip_address),
             mac_address=get_mac_address(ip_address),
+            vendor=get_vendor(mac),
             online=True
         )
 

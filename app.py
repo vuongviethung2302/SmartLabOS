@@ -2,6 +2,7 @@ from flask import Flask
 from config import Config
 from database.db import db
 from routes.computer_routes import computer_bp
+from routes.api_routes import api_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -9,6 +10,8 @@ app.config.from_object(Config)
 db.init_app(app)
 
 app.register_blueprint(computer_bp)
+
+
 
 @app.route("/")
 def home():
