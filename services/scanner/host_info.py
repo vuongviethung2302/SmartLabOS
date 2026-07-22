@@ -10,4 +10,4 @@ class HostInfo:
 
     mac_address: str = ""
 
-    status: str = "Offline"
+    online: bool = False

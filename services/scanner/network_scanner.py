@@ -1,6 +1,10 @@
-from .ping import ping_host
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import ipaddress
+
+from .ping import ping_host
+from .hostname import get_hostname
+from .mac import get_mac_address
+from .host_info import HostInfo
 
 
 class NetworkScanner:
@@ -11,6 +15,18 @@ class NetworkScanner:
     def scan_host(self, ip_address):
         return ping_host(ip_address)
 
+    def get_host_info(self, ip_address):
+
+        if not ping_host(ip_address):
+            return None
+
+        return HostInfo(
+            ip_address=ip_address,
+            computer_name=get_hostname(ip_address),
+            mac_address=get_mac_address(ip_address),
+            online=True
+        )
+
     def scan_subnet(self, subnet):
 
         online_hosts = []
@@ -19,11 +35,10 @@ class NetworkScanner:
 
         for ip in network.hosts():
 
-            ip = str(ip)
+            host = self.get_host_info(str(ip))
 
-            if self.scan_host(ip):
-
-                online_hosts.append(ip)
+            if host:
+                online_hosts.append(host)
 
         return online_hosts
 
@@ -39,16 +54,16 @@ class NetworkScanner:
 
             for ip in network.hosts():
 
-                future = executor.submit(self.scan_host, str(ip))
+                future = executor.submit(self.get_host_info, str(ip))
 
                 futures[future] = str(ip)
 
             for future in as_completed(futures):
 
-                ip = futures[future]
+                host = future.result()
 
-                if future.result():
+                if host:
 
-                    online_hosts.append(ip)
+                    online_hosts.append(host)
 
         return online_hosts

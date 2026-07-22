@@ -5,7 +5,7 @@ scanner = NetworkScanner()
 
 start = time.time()
 
-online = scanner.scan_subnet_thread("127.0.0.0/30")
+online = scanner.scan_subnet_thread("10.170.44.0/24")
 
 end = time.time()
 
