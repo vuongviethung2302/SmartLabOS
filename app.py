@@ -10,7 +10,7 @@ app.config.from_object(Config)
 db.init_app(app)
 
 app.register_blueprint(computer_bp)
-
+app.register_blueprint(api_bp)
 
 
 @app.route("/")
@@ -18,4 +18,8 @@ def home():
     return "Welcome to SmartLab OS"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=True
+    )
