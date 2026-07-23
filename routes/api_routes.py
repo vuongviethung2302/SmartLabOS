@@ -23,6 +23,10 @@ def heartbeat():
 def get_command():
 
     mac = request.args.get("mac_address")
+    print("=" * 50)
+    print("GET COMMAND REQUEST")
+    print("MAC:", mac)
+    print("=" * 50)
 
     computer = Computer.query.filter_by(
         mac_address=mac

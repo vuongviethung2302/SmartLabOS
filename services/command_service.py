@@ -23,3 +23,16 @@ class CommandService:
             computer_id=computer_id,
             status="Pending"
         ).first()
+
+    def complete(self, command_id):
+
+        command = Command.query.get(command_id)
+
+        if not command:
+            return None
+
+        command.status = "Completed"
+
+        db.session.commit()
+
+        return command

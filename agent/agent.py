@@ -3,6 +3,7 @@ import time
 from heartbeat import send_heartbeat
 from command import get_command
 from config import HEARTBEAT_INTERVAL
+from executor import CommandExecutor
 
 
 def main():
@@ -20,7 +21,10 @@ def main():
 
             command_response = get_command()
             print("Command   :", command_response)
-
+            if command_response["command"]:
+                CommandExecutor().execute(
+                    command_response["command"]
+                )
         except Exception as e:
 
             print("Agent Error:", e)
