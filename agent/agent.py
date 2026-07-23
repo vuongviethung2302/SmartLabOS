@@ -1,21 +1,29 @@
 import time
 
 from heartbeat import send_heartbeat
+from command import get_command
 from config import HEARTBEAT_INTERVAL
 
 
 def main():
 
+    print("===================================")
     print("SmartLab Agent Started")
+    print("===================================")
 
     while True:
 
         try:
-            response = send_heartbeat()
-            print(response)
+
+            heartbeat_response = send_heartbeat()
+            print("Heartbeat :", heartbeat_response)
+
+            command_response = get_command()
+            print("Command   :", command_response)
 
         except Exception as e:
-            print("Heartbeat Error:", e)
+
+            print("Agent Error:", e)
 
         time.sleep(HEARTBEAT_INTERVAL)
 

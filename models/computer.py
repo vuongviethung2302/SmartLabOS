@@ -10,6 +10,7 @@ class Computer(db.Model):
     ip_address = db.Column(db.String(20), unique=True, nullable=False)
     mac_address = db.Column(db.String(20))
     status = db.Column(db.String(20), default="Offline")
+    last_seen = db.Column(db.DateTime)
 
     def __repr__(self):
         return f"<Computer {self.computer_name}>"
