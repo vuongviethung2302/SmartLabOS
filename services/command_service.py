@@ -36,3 +36,16 @@ class CommandService:
         db.session.commit()
 
         return command
+
+    def mark_done(self, command_id):
+
+        command = Command.query.get(command_id)
+
+        if not command:
+            return False
+
+        command.status = "Done"
+
+        db.session.commit()
+
+        return True

@@ -9,12 +9,27 @@ class CommandExecutor:
         print("Received Command :", command)
         print("=" * 50)
 
-        if command == "test":
+        try:
 
-            print(">>> TEST COMMAND EXECUTED")
+            if command == "test":
 
-            return True
+                print(">>> TEST COMMAND EXECUTED")
+                return True
 
-        print(">>> UNKNOWN COMMAND")
+            elif command == "shutdown":
 
-        return False
+                print(">>> SHUTDOWN EXECUTING...")
+
+                os.system("shutdown /s /t 0")
+
+                return True
+
+            else:
+
+                print(f">>> UNKNOWN COMMAND: {command}")
+                return False
+
+        except Exception as e:
+
+            print(">>> EXECUTE ERROR:", e)
+            return False

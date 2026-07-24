@@ -2,6 +2,7 @@ import time
 
 from heartbeat import send_heartbeat
 from command import get_command
+from command_done import command_done
 from config import HEARTBEAT_INTERVAL
 from executor import CommandExecutor
 
@@ -21,10 +22,21 @@ def main():
 
             command_response = get_command()
             print("Command   :", command_response)
+
             if command_response["command"]:
-                CommandExecutor().execute(
+
+                success = CommandExecutor().execute(
                     command_response["command"]
                 )
+
+                if success:
+
+                    command_done(
+                        command_response["command_id"]
+                    )
+
+                    print(">>> Command Marked Done")
+
         except Exception as e:
 
             print("Agent Error:", e)

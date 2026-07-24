@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SmartLab OS</title>
+</head>
+
+<body>
+
+<h1>SmartLab OS</h1>
+
+<table border="1" cellpadding="8">
+
+<tr>
+    <th>ID</th>
+    <th>Computer</th>
+    <th>IP</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+
+{% for computer in computers %}
+
+<tr>
+
+    <td>{{ computer.id }}</td>
+
+    <td>{{ computer.computer_name }}</td>
+
+    <td>{{ computer.ip_address }}</td>
+
+    <td>{{ computer.status }}</td>
+
+    <td>
+
+    <form action="/shutdown" method="POST">
+
+        
+    <td>
+    {% if computer.status == "Online" %}
+       <form action="/shutdown" method="POST">
+             <input
+               type="hidden"    
+               name="computer_id"
+                value="{{ computer.id }}"
+        >
+            <button
+                type="submit"
+                onclick="return confirm('Bạn có chắc muốn Shutdown máy này?')">
+
+                🟥 Shutdown
+            </button>
+        </form>
+    {% else %}
+
+    -
+
+{% endif %}
+
+    </td>
+            
+        >
+
+        <button
+            type="submit"
+            onclick="return confirm('Bạn có chắc muốn Shutdown máy này?')">
+
+            Shutdown
+
+        </button>
+
+    </form>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+
+</html>

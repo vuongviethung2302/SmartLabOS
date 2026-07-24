@@ -73,3 +73,12 @@ def create_command():
     return jsonify({
         "success": True
     })
+
+@api_bp.route("/api/command/<int:command_id>/done", methods=["POST"])
+def command_done(command_id):
+
+    CommandService().mark_done(command_id)
+
+    return jsonify({
+        "success": True
+    })
