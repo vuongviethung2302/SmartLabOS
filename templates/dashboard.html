@@ -7,75 +7,91 @@
 
 <body>
 
-<h1>SmartLab OS</h1>
+<h1 style="color:red">
+    SMARTLAB TEST 999999
+</h1>
+
+<form action="/scan" method="POST" style="margin-bottom:20px;">
+
+    <button type="submit">
+
+        🔍 Scan Network
+
+    </button>
+
+</form>
 
 <table border="1" cellpadding="8">
 
-<tr>
-    <th>ID</th>
-    <th>Computer</th>
-    <th>IP</th>
-    <th>Status</th>
-    <th>Action</th>
-</tr>
+    <tr>
+        <th>ID</th>
+        <th>Computer</th>
+        <th>IP</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
 
-{% for computer in computers %}
+    {% for computer in computers %}
 
-<tr>
+    <tr>
 
-    <td>{{ computer.id }}</td>
+        <td>{{ computer.id }}</td>
+        <td>{{ computer.computer_name }}</td>
+        <td>{{ computer.ip_address }}</td>
+        <td>{{ computer.status }}</td>
 
-    <td>{{ computer.computer_name }}</td>
+        <td>
 
-    <td>{{ computer.ip_address }}</td>
+            {% if computer.status == "Online" %}
 
-    <td>{{ computer.status }}</td>
+                <!-- Shutdown -->
+                <form action="/shutdown" method="POST" style="display:inline;">
 
-    <td>
+                    <input
+                        type="hidden"
+                        name="computer_id"
+                        value="{{ computer.id }}"
+                    >
 
-    <form action="/shutdown" method="POST">
+                    <button
+                        type="submit"
+                        onclick="return confirm('Bạn có chắc muốn Shutdown máy này?')">
 
-        
-    <td>
-    {% if computer.status == "Online" %}
-       <form action="/shutdown" method="POST">
-             <input
-               type="hidden"    
-               name="computer_id"
-                value="{{ computer.id }}"
-        >
-            <button
-                type="submit"
-                onclick="return confirm('Bạn có chắc muốn Shutdown máy này?')">
+                        🟥 Shutdown
 
-                🟥 Shutdown
-            </button>
-        </form>
-    {% else %}
+                    </button>
 
-    -
+                </form>
 
-{% endif %}
+                <!-- Deploy -->
+                <form action="/deploy" method="POST" style="display:inline;">
 
-    </td>
-            
-        >
+                    <input
+                        type="hidden"
+                        name="computer_id"
+                        value="{{ computer.id }}"
+                    >
 
-        <button
-            type="submit"
-            onclick="return confirm('Bạn có chắc muốn Shutdown máy này?')">
+                    <button
+                        type="submit">
 
-            Shutdown
+                        📦 Deploy Agent
 
-        </button>
+                    </button>
 
-    </form>
+                </form>
 
-    </td>
+            {% else %}
 
-</tr>
+                -
 
-{% endfor %}
+            {% endif %}
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
 
 </table>
 

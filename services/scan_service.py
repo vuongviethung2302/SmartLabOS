@@ -6,27 +6,54 @@ from models.computer import Computer
 class ScanService:
 
     def __init__(self):
+
         self.scanner = NetworkScanner()
 
     def scan_vlan(self, subnet):
 
-        online_hosts = self.scanner.scan_subnet_thread(subnet)
+        return self.scanner.scan_subnet_thread(subnet)
 
-        return online_hosts
-
-    def sync_online_status(self, subnet):
+    def sync_database(self, subnet):
 
         online_hosts = self.scan_vlan(subnet)
 
-        computers = Computer.query.all()
+        # Đánh dấu tất cả máy Offline trước
+        Computer.query.update(
+            {
+                "status": "Offline"
+            }
+        )
 
-        for computer in computers:
+        for host in online_hosts:
 
-            if str(computer.ip_address) in online_hosts:
+            computer = Computer.query.filter_by(
+                ip_address=host.ip_address
+            ).first()
+
+            if computer:
+
+                computer.computer_name = host.computer_name
+                computer.mac_address = host.mac_address
+                computer.vendor = host.vendor
                 computer.status = "Online"
+
             else:
-                computer.status = "Offline"
+
+                computer = Computer(
+
+                    ip_address=host.ip_address,
+
+                    computer_name=host.computer_name,
+
+                    mac_address=host.mac_address,
+
+                    vendor=host.vendor,
+
+                    status="Online"
+                )
+
+                db.session.add(computer)
 
         db.session.commit()
 
-        return online_hosts
+        return len(online_hosts)
